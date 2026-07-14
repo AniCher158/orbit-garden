@@ -2,11 +2,19 @@
 
 > Grow your world while you study.
 
+**[Play Orbit Garden](https://orbit-garden.expo.app)** ·
+**[GitHub repository](https://github.com/AniCher158/orbit-garden)** ·
+**[Expo project](https://expo.dev/accounts/anishacheruvu/projects/orbit-garden)**
+
 Orbit Garden is a genuine Expo and React Native study companion for high-school students. It connects courses, assignments, exams, study methods, focused sessions, spaced review, carefully labeled academic resources, and a cozy garden grown alongside Sprig—an original alien botanist.
 
 The same codebase runs on iOS, Android, and Expo Web. Core student data stays on the device through versioned AsyncStorage and does not require an account, API key, or remote database.
 
-**Playable web demo:** _Not deployed yet. The project is ready for Expo Web export and EAS Hosting._
+## Launch the app
+
+- **Web:** open [orbit-garden.expo.app](https://orbit-garden.expo.app) in a modern browser. No installation or account is required.
+- **Expo Go:** install Expo Go with SDK 54 support, run `npm install` and `npx expo start` from this directory, then scan the QR code.
+- **Local web:** run `npm install` followed by `npm run web`.
 
 ## Target audience
 
@@ -135,9 +143,11 @@ The tests cover assignment priority, Pomodoro transitions, timer restoration, de
 
 ```bash
 npm run export:web
-npx eas-cli@latest login
-npx eas-cli@latest deploy
+eas login --browser
+eas deploy --prod --export-dir dist
 ```
+
+The production web deployment uses EAS Hosting. Native App Store and Google Play builds have not been created.
 
 For future development builds:
 

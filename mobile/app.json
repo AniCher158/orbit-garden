@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Orbit Garden",
+    "owner": "anishacheruvu",
     "slug": "orbit-garden",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -39,11 +40,24 @@
           }
         }
       ],
-      "expo-audio"
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ad007a66-3bdd-475e-a560-6ee994871022"
+      }
     }
   }
 }

@@ -2,9 +2,19 @@
 
 > Grow a universe, one focused moment at a time.
 
+## Main Expo study app
+
+The primary project is the academic planner and reward garden in [`mobile/`](mobile/README.md).
+
+**[Play the app](https://orbit-garden.expo.app)** ·
+**[View on GitHub](https://github.com/AniCher158/orbit-garden)** ·
+**[Expo project](https://expo.dev/accounts/anishacheruvu/projects/orbit-garden)**
+
+The repository root also preserves the earlier Orbit Garden focus-timer web prototype described below.
+
 Orbit Garden is a cozy, gamified focus timer where every completed session becomes a procedurally generated planet. Longer sessions can discover larger and more detailed worlds, while the task category shapes each planet's palette and surface style. Your galaxy, history, notes, statistics, and achievements stay private in your browser.
 
-**Live demo:** _Coming soon — the project is ready to import into Vercel._
+**Live academic app:** [https://orbit-garden.expo.app](https://orbit-garden.expo.app)
 
 ## Mobile app
 
@@ -62,7 +72,7 @@ Longer sessions increase visual complexity and the chance of unusual traits, but
 You need Node.js 20 or newer.
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/AniCher158/orbit-garden.git
 cd orbit-garden
 npm install
 npm run dev
