@@ -6,6 +6,13 @@ Orbit Garden is a cozy, gamified focus timer where every completed session becom
 
 **Live demo:** _Coming soon — the project is ready to import into Vercel._
 
+## Mobile app
+
+The repository also contains the full Expo/React Native academic planner,
+evidence-guided study timer, and reward garden described in the latest project
+brief. See [`mobile/README.md`](mobile/README.md) for Expo Go setup, architecture,
+research notes, testing, privacy, and EAS build instructions.
+
 ## Screenshot
 
 ![Orbit Garden screenshot placeholder](docs/screenshot-placeholder.svg)
