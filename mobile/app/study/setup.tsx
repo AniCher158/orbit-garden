@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -24,6 +24,11 @@ const examples: Record<string, string> = {
   "World Languages": "Recall twenty words, then use five in sentences",
   "Arts & Other": "Finish one concrete stage of the project",
 };
+
+const suggestedGoal = (category?: string) =>
+  (category && examples[category]) ??
+  "Choose one specific result you can finish in this session";
+
 export default function StudySetupScreen() {
   const params = useLocalSearchParams<{
     assignmentId?: string;
@@ -58,6 +63,39 @@ export default function StudySetupScreen() {
   );
   const [audioId, setAudioId] = useState(settings.defaultAudioId);
   const course = courses.find((item) => item.id === courseId);
+  useEffect(() => {
+    if (courseId || courses.length === 0) return;
+    const hydratedCourseId =
+      selectedAssignment?.courseId ??
+      selectedReview?.courseId ??
+      params.courseId ??
+      courses[0].id;
+    const hydratedCourse = courses.find((item) => item.id === hydratedCourseId);
+    setCourseId(hydratedCourseId);
+    if (selectedAssignment) {
+      setAssignmentId(selectedAssignment.id);
+      setGoal(selectedAssignment.title);
+    } else if (selectedReview) {
+      setTopic(selectedReview.topic);
+      setGoal(`Review ${selectedReview.topic}`);
+      if (!params.methodId) setMethodId("spaced-review");
+    } else if (hydratedCourse) {
+      setGoal(suggestedGoal(hydratedCourse.category));
+    }
+  }, [
+    courseId,
+    courses,
+    params.courseId,
+    params.methodId,
+    selectedAssignment,
+    selectedReview,
+  ]);
+  useEffect(() => {
+    if (!course || selectedAssignment) return;
+    setGoal((current) =>
+      current.trim() ? current : suggestedGoal(course.category),
+    );
+  }, [course, selectedAssignment]);
   const courseAssignments = assignments.filter(
     (item) => item.courseId === courseId && !item.completed,
   );
@@ -109,7 +147,7 @@ export default function StudySetupScreen() {
               onPress={() => {
                 setCourseId(item.id);
                 setAssignmentId("");
-                setGoal("");
+                setGoal(suggestedGoal(item.category));
               }}
             />
           ))}
@@ -145,7 +183,9 @@ export default function StudySetupScreen() {
           value={goal}
           onChangeText={setGoal}
           placeholder={
-            course ? examples[course.category] : "Choose a specific finish line"
+            course
+              ? suggestedGoal(course.category)
+              : "Choose a specific finish line"
           }
           multiline
         />
@@ -153,7 +193,7 @@ export default function StudySetupScreen() {
           <Ionicons name="create-outline" color={colors.gold} size={20} />
           <AppText variant="small" style={styles.flex}>
             {course
-              ? examples[course.category]
+              ? suggestedGoal(course.category)
               : "A useful goal starts with a verb: solve, explain, draft, recall, debug, compare."}
           </AppText>
         </Card>

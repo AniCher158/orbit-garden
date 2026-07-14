@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Alert, AppState, StyleSheet, View } from "react-native";
+import { Alert, AppState, Platform, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
@@ -97,22 +97,26 @@ export default function TimerScreen() {
       update({ paused: false, endAt: Date.now() + remaining * 1000 });
     else update({ paused: true, endAt: null, remainingSeconds: remaining });
   };
-  const cancel = () =>
-    Alert.alert(
-      "End this session?",
-      "Canceled sessions do not create journal entries or rewards.",
-      [
-        { text: "Keep studying", style: "cancel" },
-        {
-          text: "End session",
-          style: "destructive",
-          onPress: () => {
-            setActive(null);
-            router.replace("/(tabs)/study");
-          },
-        },
-      ],
-    );
+  const endSession = () => {
+    setActive(null);
+    router.replace("/(tabs)/study");
+  };
+  const cancel = () => {
+    const message =
+      "Canceled sessions do not create journal entries or rewards.";
+    if (Platform.OS === "web") {
+      if (globalThis.confirm(`End this session?\n\n${message}`)) endSession();
+      return;
+    }
+    Alert.alert("End this session?", message, [
+      { text: "Keep studying", style: "cancel" },
+      {
+        text: "End session",
+        style: "destructive",
+        onPress: endSession,
+      },
+    ]);
+  };
   return (
     <Screen scroll={false} contentStyle={styles.center}>
       <View style={styles.meta}>
